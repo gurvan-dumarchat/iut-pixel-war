@@ -73,6 +73,10 @@ const setPlayerTeam = async (teamNumber) => {
       let req = await fetch(`${baseUrl}choisir-equipe`, {
         method: "PUT",
         body: JSON.stringify(data),
+        headers:{
+          "accept":"application/json",
+          "Content-Type":"application/json"
+        }
       });
       let response = await req.json();
       return response;
@@ -84,6 +88,29 @@ const setPlayerTeam = async (teamNumber) => {
   }
 };
 
-document.querySelector("button").onclick = async () => {
-  setPlayerTeam(2).then((res) => console.log(res));
-};
+const setCell = async (color,col,row) =>{
+  const data = {
+    uid: uid,
+    color: color,
+    col:col,
+    row,row
+  };
+  try {
+    if (uid) {
+      let req = await fetch(`${baseUrl}modifier-case`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers:{
+          "accept":"application/json",
+          "Content-Type":"application/json"
+        }
+      });
+      let response = await req.json();
+      return response;
+    } else {
+      throw new Error("Mauvaise reqûete");
+    }
+  } catch (error) {
+    console.log(e);
+  }
+}
