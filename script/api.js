@@ -23,10 +23,10 @@ export const getWaitTime = async () => {
       });
       let response = await req.json();
       return response;
-    }else{
-      throw new Error("UID non renseigné")
+    } else {
+      throw new Error("UID non renseigné");
     }
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
 };
@@ -39,10 +39,10 @@ export const getTeam = async () => {
       });
       let response = await req.json();
       return response;
-    }else{
-      throw new Error("UID non renseigné")
+    } else {
+      throw new Error("UID non renseigné");
     }
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
 };
@@ -55,14 +55,35 @@ export const getRecentPlayers = async () => {
       });
       let response = await req.json();
       return response;
-    }else{
-      throw new Error("UID non renseigné")
+    } else {
+      throw new Error("UID non renseigné");
     }
-  }catch(e){
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const setPlayerTeam = async (teamNumber) => {
+  const data = {
+    uid: uid,
+    nouvelleEquipe: teamNumber,
+  };
+  try {
+    if (uid) {
+      let req = await fetch(`${baseUrl}choisir-equipe`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+      let response = await req.json();
+      return response;
+    } else {
+      throw new Error("Mauvaise reqûete");
+    }
+  } catch (error) {
     console.log(e);
   }
 };
 
 document.querySelector("button").onclick = async () => {
-  getTeam().then((res) => console.log(res));
+  setPlayerTeam(2).then((res) => console.log(res));
 };
