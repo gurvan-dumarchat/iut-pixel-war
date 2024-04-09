@@ -94,7 +94,7 @@ const pageRefresh = async () => {
       );
       await recentActions();
     }
-  }, 5000);
+  }, 2500);
 };
 
 const main = async () => {
