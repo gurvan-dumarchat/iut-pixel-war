@@ -1,7 +1,3 @@
-let uid;
-fetch("/script/env.json")
-  .then((res) => res.json())
-  .then((data) => (uid = data.uid));
 const baseUrl = "https://pixel-api.codenestedu.fr/";
 
 /**
@@ -15,7 +11,7 @@ export const getBoard = async () => {
   return response;
 };
 
-export const getWaitTime = async () => {
+export const getWaitTime = async (uid) => {
   try {
     if (uid) {
       let req = await fetch(`${baseUrl}temps-attente?uid=${uid}`, {
@@ -24,14 +20,14 @@ export const getWaitTime = async () => {
       let response = await req.json();
       return response;
     } else {
-      throw new Error("UID non renseigné");
+      alert("UID non renseigné")
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getTeam = async () => {
+export const getTeam = async (uid) => {
   try {
     if (uid) {
       let req = await fetch(`${baseUrl}equipe-utilisateur?uid=${uid}`, {
@@ -40,14 +36,14 @@ export const getTeam = async () => {
       let response = await req.json();
       return response;
     } else {
-      throw new Error("UID non renseigné");
+      alert("UID non renseigné");
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getRecentPlayers = async () => {
+export const getRecentPlayers = async (uid) => {
   try {
     if (uid) {
       let req = await fetch(`${baseUrl}liste-joueurs?uid=${uid}`, {
@@ -56,14 +52,14 @@ export const getRecentPlayers = async () => {
       let response = await req.json();
       return response;
     } else {
-      throw new Error("UID non renseigné");
+      alert("UID non renseigné");
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-const setPlayerTeam = async (teamNumber) => {
+export const setPlayerTeam = async (teamNumber,uid) => {
   const data = {
     uid: uid,
     nouvelleEquipe: teamNumber,
@@ -81,14 +77,14 @@ const setPlayerTeam = async (teamNumber) => {
       let response = await req.json();
       return response;
     } else {
-      throw new Error("Mauvaise reqûete");
+      alert("Mauvaise reqûete");
     }
   } catch (error) {
-    console.log(e);
+    console.log(error);
   }
 };
 
-const setCell = async (color,col,row) =>{
+export const setCell = async (uid,color,col,row) =>{
   const data = {
     uid: uid,
     color: color,
@@ -108,7 +104,7 @@ const setCell = async (color,col,row) =>{
       let response = await req.json();
       return response;
     } else {
-      throw new Error("Mauvaise reqûete");
+      alert("Mauvaise reqûete");
     }
   } catch (error) {
     console.log(e);
