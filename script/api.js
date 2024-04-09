@@ -19,8 +19,6 @@ export const getWaitTime = async (uid) => {
       });
       let response = await req.json();
       return response;
-    } else {
-      alert("UID non renseigné")
     }
   } catch (e) {
     console.log(e);
@@ -35,8 +33,6 @@ export const getTeam = async (uid) => {
       });
       let response = await req.json();
       return response;
-    } else {
-      alert("UID non renseigné");
     }
   } catch (e) {
     console.log(e);
@@ -51,8 +47,6 @@ export const getRecentPlayers = async (uid) => {
       });
       let response = await req.json();
       return response;
-    } else {
-      alert("UID non renseigné");
     }
   } catch (e) {
     console.log(e);
@@ -76,8 +70,6 @@ export const setPlayerTeam = async (teamNumber,uid) => {
       });
       let response = await req.json();
       return response;
-    } else {
-      alert("Mauvaise reqûete");
     }
   } catch (error) {
     console.log(error);
@@ -89,7 +81,7 @@ export const setCell = async (uid,color,col,row) =>{
     uid: uid,
     color: color,
     col:col,
-    row,row
+    row:row
   };
   try {
     if (uid) {
@@ -103,8 +95,6 @@ export const setCell = async (uid,color,col,row) =>{
       });
       let response = await req.json();
       return response;
-    } else {
-      alert("Mauvaise reqûete");
     }
   } catch (error) {
     console.log(e);
