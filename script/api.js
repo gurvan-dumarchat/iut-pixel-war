@@ -1,7 +1,7 @@
 const baseUrl = "https://pixel-api.codenestedu.fr/";
 
 /**
- * Fetches the color board from the API
+ * Récupération de la matrice de couleurs
  */
 export const getBoard = async () => {
   let req = await fetch(`${baseUrl}tableau`, {
@@ -11,6 +11,11 @@ export const getBoard = async () => {
   return response;
 };
 
+/**
+ * Récupération du temps d'attente
+ * @param {string} uid Identifiant de l'utilisateur
+ * @returns Temps d'attente
+ */
 export const getWaitTime = async (uid) => {
   try {
     if (uid) {
@@ -24,7 +29,11 @@ export const getWaitTime = async (uid) => {
     console.log(e);
   }
 };
-
+/**
+ * Récupération de l'équipe de l'utilisateur
+ * @param {string} uid Identifiant de l'utilisateur
+ * @returns Numéro d'équipe
+ */
 export const getTeam = async (uid) => {
   try {
     if (uid) {
@@ -38,7 +47,11 @@ export const getTeam = async (uid) => {
     console.log(e);
   }
 };
-
+/**
+ * Récupération des actions récentes
+ * @param {string} uid Identifiant de l'utilisateur
+ * @returns Tableau d'actions récentes
+ */
 export const getRecentPlayers = async (uid) => {
   try {
     if (uid) {
@@ -52,8 +65,13 @@ export const getRecentPlayers = async (uid) => {
     console.log(e);
   }
 };
-
-export const setPlayerTeam = async (teamNumber,uid) => {
+/**
+ * Change l'équipe du joueur
+ * @param {number} teamNumber Numéro d'équipe
+ * @param {string} uid Identifiant de l'utilisateur
+ * @returns Résultat du changement d'équipe
+ */
+export const setPlayerTeam = async (teamNumber, uid) => {
   const data = {
     uid: uid,
     nouvelleEquipe: teamNumber,
@@ -63,10 +81,10 @@ export const setPlayerTeam = async (teamNumber,uid) => {
       let req = await fetch(`${baseUrl}choisir-equipe`, {
         method: "PUT",
         body: JSON.stringify(data),
-        headers:{
-          "accept":"application/json",
-          "Content-Type":"application/json"
-        }
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
       let response = await req.json();
       return response;
@@ -75,23 +93,30 @@ export const setPlayerTeam = async (teamNumber,uid) => {
     console.log(error);
   }
 };
-
-export const setCell = async (uid,color,col,row) =>{
+/**
+ * Changement d'une case de la matrice
+ * @param {string} uid Identifiant de l'utilisateur
+ * @param {string} color Couleur du nouveau pixel
+ * @param {number} col Abscisse du nouveau pixel
+ * @param {number} row Ordonnée du nouveau pixel
+ * @returns Résultat du changement de pixel
+ */
+export const setCell = async (uid, color, col, row) => {
   const data = {
     uid: uid,
     color: color,
-    col:col,
-    row:row
+    col: col,
+    row: row,
   };
   try {
     if (uid) {
       let req = await fetch(`${baseUrl}modifier-case`, {
         method: "PUT",
         body: JSON.stringify(data),
-        headers:{
-          "accept":"application/json",
-          "Content-Type":"application/json"
-        }
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
       let response = await req.json();
       return response;
@@ -99,4 +124,4 @@ export const setCell = async (uid,color,col,row) =>{
   } catch (error) {
     console.log(e);
   }
-}
+};

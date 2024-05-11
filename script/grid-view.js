@@ -8,6 +8,9 @@ import {
 
 let uid;
 
+/**
+ * Actualise le tableau de pixels
+ */
 const refreshGrid = async () => {
   let board = await getBoard().then((res) => res);
   let grid = document.querySelector(".view");
@@ -31,6 +34,9 @@ const refreshGrid = async () => {
   });
 };
 
+/**
+ * Mise à jour de l'équipe
+ */
 const teamButtons = async () => {
   const buttonDiv = document.querySelector(".team-select");
   const teamIDs = [1, 2, 3, 4];
@@ -46,6 +52,9 @@ const teamButtons = async () => {
   });
 };
 
+/**
+ * Actualise le tableau des actions récentes
+ */
 const recentActions = async () => {
   uid = document.querySelector("#uid-input").value;
   const tbody = document.querySelector(".tbody");
@@ -61,6 +70,14 @@ const recentActions = async () => {
   }
 };
 
+/**
+ * Crée une ligne dans le tableau des actions récentes
+ * @param {*} name Nom de l'utilisateur
+ * @param {*} team Équipe de l'utilisateur
+ * @param {*} lastModified Date de la modification
+ * @param {*} banned Indique le statut de banissement de l'utilisateur
+ * @returns Ligne du tableau
+ */
 const createTableRow = (name, team, lastModified, banned) => {
   const row = document.createElement("div");
   row.classList.add("tr");
@@ -79,6 +96,9 @@ const createTableRow = (name, team, lastModified, banned) => {
   return row;
 };
 
+/**
+ * Rafraichît la page si l'UID est correct
+ */
 const pageRefresh = async () => {
   const waitP = document.querySelector("#wait-info");
   setInterval(async () => {
@@ -90,17 +110,21 @@ const pageRefresh = async () => {
           (waitP.textContent =
             res.tempsAttente === 0
               ? `Vous pouvez placer un pixel`
-              : `Veuillez patienter ${Math.round(res.tempsAttente/1000)} secondes`)
+              : `Veuillez patienter ${Math.round(
+                  res.tempsAttente / 1000
+                )} secondes`)
       );
       await recentActions();
     }
   }, 2500);
 };
 
+/**
+ * Fonction principale
+ */
 const main = async () => {
   await recentActions();
   await teamButtons();
-  await refreshGrid();
   await pageRefresh();
 };
 
