@@ -1,3 +1,5 @@
+import { createPopUp } from "./grid-view.js";
+
 const baseUrl = "https://pixel-api.codenestedu.fr/";
 
 /**
@@ -23,6 +25,9 @@ export const getWaitTime = async (uid) => {
         method: "GET",
       });
       let response = await req.json();
+      if (response.msg) {
+        createPopUp(response.msg, error);
+      }
       return response;
     }
   } catch (e) {
@@ -41,6 +46,9 @@ export const getTeam = async (uid) => {
         method: "GET",
       });
       let response = await req.json();
+      if (response.msg) {
+        createPopUp(response.msg, error);
+      }
       return response;
     }
   } catch (e) {
@@ -59,6 +67,9 @@ export const getRecentPlayers = async (uid) => {
         method: "GET",
       });
       let response = await req.json();
+      if (response.msg) {
+        createPopUp(response.msg, true);
+      }
       return response;
     }
   } catch (e) {
@@ -87,6 +98,11 @@ export const setPlayerTeam = async (teamNumber, uid) => {
         },
       });
       let response = await req.json();
+      if (response.msg.startsWith("Changement")) {
+        createPopUp(response.msg, false);
+      } else {
+        createPopUp(response.msg, true);
+      }
       return response;
     }
   } catch (error) {
@@ -119,6 +135,11 @@ export const setCell = async (uid, color, col, row) => {
         },
       });
       let response = await req.json();
+      if (response.msg.startsWith("pixel")) {
+        createPopUp(response.msg, false);
+      } else {
+        createPopUp(response.msg, true);
+      }
       return response;
     }
   } catch (error) {

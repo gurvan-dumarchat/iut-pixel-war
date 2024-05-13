@@ -35,6 +35,43 @@ const refreshGrid = async () => {
 };
 
 /**
+ * Stocke l'UID dans le Local Storage du navigateur
+ */
+const storeCredentials = () => {
+  const button = document.querySelector("#credentials-btn");
+  const input = document.querySelector("#uid-input");
+  button.onclick = () => {
+    localStorage.setItem("uid", input.value);
+    uid = input.value;
+  };
+};
+
+/**
+ * Récupère l'uid stockée dans le Local Storage
+ */
+const getCredentials = () => {
+  const input = document.querySelector("#uid-input");
+  uid = localStorage.getItem("uid");
+  input.value = uid;
+};
+
+/**
+ * Génère une popup avec un message et une nature d'information
+ * @param {string} message
+ * @param {boolean} error
+ */
+export const createPopUp = (message, error) => {
+  const box = document.createElement("div");
+  box.classList.add("popup");
+  box.classList.add(error ? "error" : "info");
+  box.innerHTML = message;
+  document.body.appendChild(box);
+  setTimeout(() => {
+    document.body.removeChild(box);
+  }, 5500);
+};
+
+/**
  * Mise à jour de l'équipe
  */
 const teamButtons = async () => {
@@ -47,7 +84,6 @@ const teamButtons = async () => {
     buttonDiv.appendChild(btn);
     btn.addEventListener("click", async (e) => {
       const team = await setPlayerTeam(num, uid);
-      const result = await team;
     });
   });
 };
@@ -64,7 +100,12 @@ const recentActions = async () => {
     tbody.innerHTML = "";
     result.map((elem) => {
       const { nom, equipe, lastModificationPixel, banned } = elem;
-      const row = createTableRow(nom, equipe, lastModificationPixel, banned);
+      const row = createTableRow(
+        nom,
+        equipe,
+        new Date(lastModificationPixel).toLocaleTimeString(),
+        banned
+      );
       tbody.appendChild(row);
     });
   }
@@ -123,8 +164,11 @@ const pageRefresh = async () => {
  * Fonction principale
  */
 const main = async () => {
+  getCredentials();
+  storeCredentials();
   await recentActions();
   await teamButtons();
+  refreshGrid();
   await pageRefresh();
 };
 
